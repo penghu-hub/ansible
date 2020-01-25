@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: ensure docker is at the latest version
+    yum:
+      name: docker
+      state: latest
+  - name: ensure docker is enabled and running
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  handlers:
+    - name: restart docker
+      service:
+        name: docker
+        state: restarted
